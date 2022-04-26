@@ -1,3 +1,0 @@
-function Login(){
-    alert("Login");
-}

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AccountRepository extends JpaRepository<AccountModels, Any> {
+public interface AccountRepository extends JpaRepository<AccountModels, Integer> {
 
-    @Query(value = "SELECT password FROM account u WHERE u.acount = ?1",
+    @Query(value = "SELECT password FROM account u WHERE u.username = ?2",
             nativeQuery = true)
     String findPassword(String username);
 }

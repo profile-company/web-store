@@ -2,6 +2,7 @@ package com.example.webstore.controllers;
 
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,10 @@ import java.util.List;
 
 @Controller
 public class Account {
-    public AccountRepository repository;
+
+    @Autowired
+    private AccountRepository repository;
+
     @GetMapping("/login")
     public String Login(){
         System.out.println("login");
@@ -23,6 +27,7 @@ public class Account {
     public String LoginFaile(){
         return "home";
     }
+
     @PostMapping("/checklogin")
     public String CheckLogin(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, Model model){
 
