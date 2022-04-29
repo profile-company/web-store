@@ -15,11 +15,12 @@
     <link rel = "stylesheet" th:href="@{/css/home/owl_carousel/owlTheme.css}" href = "../static/css/home/owl_carousel/owlTheme.css">
     <link rel = "stylesheet" th:href="@{/css/home/owl_carousel/owlCarousel.css}" href = "../static/css/home/owl_carousel/owlCarousel.css">
     <!-- custom css -->
-    <!--    <script th:src="@{/js/home/slide.js}" src="../static/js/home/slide.js" ></script>-->
+<!--        <script th:src="@{/js/home/slide.js}" src="../static/js/home/slide.js" ></script>-->
     <link th:href="@{/css/home/home.css}" href="../static/css/home/home.css" />
 </head>
 <body>
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <!--    slide header   -->
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img src="http://4.bp.blogspot.com/-hnpGMqGqzBw/UOU6TXIBwuI/AAAAAAAAAcg/imoNvmgZv4o/s1600/hinh-anh-dep-nhat-ve-dong-vat-hoang-da.jpg" class="d-block w-100" alt="...">
@@ -423,9 +424,99 @@
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- owl carousel -->
-    <script th:src = "@{/js/home/owl_carousel/owl_carousel.js}"></script>
+    <script th:src = "@{/js/home/owl_carousel/owl_carousel.js}" src="../static/js/home/owl_carousel.js"></script>
     <script th:src = "@{/js/home/slide.js}" src="../static/js/home/slide.js" ></script>
 
 </div>
+
+        <!--  san pham NAM NU  -->
+
+        <div class="container-sm">
+            <div class="product-nam-nu">
+                <div class="container">
+
+                    <h1 class = "text-center">NAM</h1>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin-top: 10px;">
+                                <img th:src = "@{/images/product/product-4.jpg}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- San pham noi bat -->
+        <div class="sp-noi-bat container">
+            <div class="card hover-card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <div class="btn-xem" >
+
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
