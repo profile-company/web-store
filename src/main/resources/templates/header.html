@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="myheader">
+<head>
+    <meta charset="UTF-8">
+    <!-- <title>Shop sport Việt Nam</title> -->
+    
+    <!--Google icons-->
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!--Style css-->
+    <link rel="stylesheet" href="../static/css/Header/css/style.css" th:href="@{/css/Header/css/style.css}">
+
+</head>
+<body>
+    <div class="top-header">
+        
+        <div class="content">
+
+            <div id="top-left-container">
+
+                <img src="../static/images/header/vietnam.png"
+                th:src="@{/images/header/vietnam.png}" alt="img-ensign" class="country-ensign">
+    
+                <span class="country-name">Tiếng Việt</span>
+    
+                <span class="material-symbols-outlined">
+                    expand_more
+                </span>
+
+                <div class="language-options">
+
+                    <div class="english-language">
+                        <img src="../static/images/header/united-kingdom.png" th:src="@{/images/header/united-kingdom.png}" alt="img-united-kingdom">
+
+                        <span>English</span>
+                    </div>
+
+                    <div class="vietnamese-language">
+                        <img src="../static/images/header/vietnam.png" alt="img-vietnam" th:src="@{/images/header/vietnam.png}">
+
+                        <span>Tiếng Việt</span>
+                    </div>
+
+                </div>
+            </div>
+    
+            <div class="top-right-container">
+
+                <div class="account-container">
+
+                    <div class="account-expand">
+
+                        <span class="country-name">Tài khoản</span>
+    
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </div>
+
+                    <div class="options-account">
+
+                        <span class="account-login">Đăng nhập</span>
+
+                        <span class="account-register">Đăng ký</span>
+                    </div>
+                </div>
+                
+                <div class="chain-shops">
+                    <span class="country-name">Hệ thống cửa hàng</span>
+    
+                    <span class="material-symbols-outlined">
+                    where_to_vote
+                    </span>
+                </div>
+                
+            </div>
+
+        </div>
+
+        <div class="bottom-container">
+
+            <div class="bottom-left-container">
+                <img src="../static/images/header/logo_360x.webp" alt="logo_360x"
+                th:src="@{/images/header/logo_360x.webp}" >
+            </div>
+
+            <div class="bottom-right-container">
+
+                <form class="search-container" action="" method="">
+
+                    <div class="textbox-search">
+
+                        <input type="text" name="" id="textbox-content-search">
+                    </div>
+
+                    <div class="button-search">
+
+                        <button type="submit">
+                            
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                            Tìm kiếm
+                        </button>
+
+                    </div>
+                </form>
+
+                <div class="cart-container">
+
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                    </span>                    
+
+                    <a href="http://">Giỏ hàng(0)</a>
+
+                </div>
+
+            </div>
+
+
+            
+        </div>
+
+    </div>
+
+    <script src="../static/js/header/expand.js"></script>
+</body>
+</html>
