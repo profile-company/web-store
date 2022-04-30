@@ -200,7 +200,6 @@
 body {
   box-sizing: border-box;
   margin: 0;
-  color: aliceblue;
 }
 
 .top-header {
@@ -218,6 +217,7 @@ body {
   margin-right: 10%;
   justify-content: space-between;
   padding-top: 10px;
+  color: #fff;
 }
 .top-header .bottom-container {
   display: flex;
