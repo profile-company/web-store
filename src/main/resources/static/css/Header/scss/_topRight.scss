@@ -1,0 +1,73 @@
+.top-right-container {
+    // border: 1px solid white;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .account-container {
+        // display: flex;
+        // align-items: center;
+        position: relative;
+        display: inline;
+    
+        .account-expand {
+            display: flex;
+            align-items: center;  
+            opacity: 0.8;
+            // position: relative;
+        }
+        .account-expand:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+        .options-account {
+            color: #000;
+            position: absolute;
+            width: calc(100% + 20px);
+            display: flex;
+            flex-direction: column;
+            padding: 5px 10px;
+            background-color: #fff;
+            top: calc(100% + 10px);
+            opacity: 1;
+            transition: all 0.12s;
+            visibility: hidden;
+
+            .account-login {
+                margin-bottom: 10px;
+            }
+            .account-login:hover  {
+                color: rgb(43, 219, 27);
+                transform: scale(1.05);
+                cursor: pointer;    
+            }
+            .account-register:hover {
+                color: rgb(43, 219, 27);
+                transform: scale(1.05);
+                cursor: pointer;
+            }
+        }
+        .options-account::after {
+            content: "";
+            position: absolute;
+            left: calc((100% - 20px) / 2);
+            bottom: 100%;
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent #fff transparent;
+        }
+    }
+    
+
+    .chain-shops {
+        display: flex;
+        align-items: center;
+        margin-left: 12px;
+        opacity: 0.8;
+        transition: opacity 0.12s; 
+    }
+    .chain-shops:hover {
+        cursor: pointer;
+        opacity: 1;
+    }
+}

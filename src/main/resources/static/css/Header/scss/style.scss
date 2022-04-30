@@ -1,0 +1,38 @@
+@use 'topLeft';
+@use 'topRight';
+@use 'bottomLeft';
+@use 'bottomRight';
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    color: aliceblue;
+}
+
+.top-header {
+    height: 500px;
+    width: 100%;
+    position: relative;
+    background-color: #12283E;
+    display: flex;
+    flex-direction: column;
+    // margin: 0 4%;
+    .content {
+        display: flex;
+        position: relative;
+        margin-left: 10%;
+        margin-right: 10%;
+        justify-content: space-between;
+        padding-top: 10px;
+    }
+    .bottom-container {
+        display: flex;
+        position: relative;
+        margin-left: 10%;
+        margin-right: 10%;
+        justify-content: space-between;
+        height: 100px;
+        // background-color: aliceblue;
+        margin-top: 20px;
+    }
+}
