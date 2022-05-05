@@ -2,6 +2,7 @@
 @use 'topRight';
 @use 'bottomLeft';
 @use 'bottomRight';
+@use 'nav';
 
 body {
     box-sizing: border-box;
@@ -10,7 +11,7 @@ body {
 }
 
 .top-header {
-    height: 500px;
+    // height: 220px;
     width: 100%;
     position: relative;
     background-color: #12283E;
@@ -35,5 +36,14 @@ body {
         height: 100px;
         // background-color: aliceblue;
         margin-top: 20px;
+    }
+
+    .navigation-header {
+        position: relative;
+        margin-left: 10%;
+        margin-right: 10%;
+        height: 60px;
+        width: calc(100vw - 20%);
+        // background-color: rgb(13, 14, 13);
     }
 }

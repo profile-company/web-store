@@ -16,6 +16,10 @@
             opacity: 0.8;
             // position: relative;
         }
+        .account-expand:focus{
+            color: red;
+            opacity: 0;
+        }
         .account-expand:hover {
             cursor: pointer;
             opacity: 1;
@@ -30,7 +34,8 @@
             background-color: #fff;
             top: calc(100% + 10px);
             opacity: 1;
-            transition: all 0.12s;
+            transition: all 0s;
+            z-index: 1000;
             visibility: hidden;
 
             .account-login {

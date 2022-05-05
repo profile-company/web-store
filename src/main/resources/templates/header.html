@@ -2,7 +2,7 @@
 <html lang="en" th:fragment="myheader">
 <head>
     <meta charset="UTF-8">
-    <!-- <title>Shop sport Việt Nam</title> -->
+    <title>Shop sport Việt Nam</title>
     
     <!--Google icons-->
     <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -122,8 +122,204 @@
             
         </div>
 
+        <div class="navigation-header">
+
+            <ul class="nav-list-header">
+
+                <li class="site-active">
+
+                    <a href="http://">
+                        <span>trang chủ</span>
+                    </a>
+                </li>
+
+                <li class="site-new-items">
+
+                    <a href="http://">
+                        <span>sản phẩm mới</span>
+                    </a>
+                </li>
+
+                <li class="dropdown-option-nav-site">
+
+                    <a href="http://">
+                        <span>thương hiệu</span>
+
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </a>
+                    
+                </li>
+
+                <li class="dropdown-option-nav-site">
+
+                    <a href="http://">
+                        <span>nam</span>
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </a>
+                    
+                </li>
+
+                <li class="dropdown-option-nav-site">
+
+                    <a href="http://">
+                        <span>nữ</span>
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </a>
+
+                
+
+                </li>                
+                
+                <li class="dropdown-option-nav-site">
+
+                    <a href="http://">
+                        <span>thể thao</span>
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </a>
+
+                    
+                </li>
+            </ul>
+   
+        </div>
+
+        <div class="container-dropdown-brands">
+
+            <ul class="container-brands">
+                
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>Nike</span>
+                    </a>
+
+                    <img src="../static/images/header/nike.png" th:src="@{/images/header/nike.png}" alt="nike-brand" id="logo-nike-brand">
+                </li>
+
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>Adidas</span>
+                    </a>
+
+                    <img src="../static/images/header/adidas.png" th:src="@{/images/header/adidas.png}" alt="adidas-brand" id="logo-adidas-brand">
+                </li>
+
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>Puma</span>
+                    </a>
+
+                    <img src="../static/images/header/puma.png" 
+                    th:src="@{/images/header/puma.png}"
+                    alt="puma-brand" id="logo-puma-brand">
+                </li>
+
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>Asics</span>
+                    </a>
+
+                    <img src="../static/images/header/asics.png" th:src="@{/images/header/asics.png}"
+                     alt="asics-brand" id="logo-asics-brand">
+                </li>
+
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>Mizuno</span>
+                    </a>
+
+                    <img src="../static/images/header/mizuno.png" th:src="@{/images/header/mizuno.png}"
+                     alt="mizuno-brand" id="logo-mizuno-brand">
+                </li>
+
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>Biti's</span>
+                    </a>
+
+                    <img src="../static/images/header/bitis.png" th:src="@{/images/header/bitis.png}"
+                     alt="biti's-brand" id="logo-bitis-brand">
+                </li> 
+
+                <li class="nav-forward-to-brand">
+                    <a href="http://">
+                        <span>FILA</span>
+                    </a>
+
+                    <img src="../static/images/header/fila.png" th:src="@{/images/header/fila.png}"
+                    alt="FILA-brand" id="logo-fila-brand">
+                </li>
+            </ul>
+
+            <div class="items-brand-advertisement">
+
+                <div id="nike-advertisement">
+                    <img src="../static/images/header/nike_ad.jpg" 
+                    th:src="@{/images/header/nike_ad.jpg}"
+                    alt="nike-advertisement">
+                </div>
+
+                <div>
+                    <img src="../static/images/header/adidas_ad.jpg"
+                    th:src="@{/images/header/adidas_ad.jpg}"
+                     alt="">
+                </div>
+
+                <div>
+                    <img src="../static/images/header/puma_ad.jpg"  th:src="@{/images/header/puma_ad.jpg}"
+                     alt="">
+                </div>
+
+                <div>
+                    <img src="../static/images/header/asics_ad.jpg"  th:src="@{/images/header/asics_ad.jpg}"
+                     alt="">
+                </div>
+
+                <div>
+                    <img src="../static/images/header/mizuno_ad.jpg"  th:src="@{/images/header/mizuno_ad.jpg}"
+                     alt="">
+                </div>
+
+                <div>
+                    <img src="../static/images/header/bitis_ad.jpg"  th:src="@{/images/header/bitis_ad.jpg}"
+                     alt="">
+                </div>
+
+                <div>
+                    <img src="../static/images/header/fila_ad.webp"
+                    th:src="@{/images/header/fila_ad.webp}"
+                     alt="">
+                </div>
+
+                
+            </div>
+        </div>
+
+        <div class="container-dropdown-sports">
+            <div class="types-of-sports">
+                <span>Bóng đá</span>
+                <span>Bóng chuyền</span>
+                <span>Bóng rổ</span>
+                <span>Chạy bộ</span>
+            </div>
+            <div class="content-left">
+                 <img src="../static/images/header/nav_sport.xwebp.webp"
+                th:src="@{/images/header/nav_sport.xwebp.webp}"
+                alt="">
+            </div>
+           
+        </div>
+
     </div>
 
-    <script src="../static/js/header/expand.js"></script>
+    <script src="../static/js/header/expand.js"
+    th:src="@{/js/header/expand.js}"></script>
 </body>
 </html>
