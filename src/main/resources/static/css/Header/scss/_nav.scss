@@ -1,0 +1,209 @@
+@mixin set-size-logo($w, $h) {
+    width: $w;
+    height: $h;
+    object-fit: contain;
+}
+
+.navigation-header {
+    // position: relative;
+    display: flex;
+    align-items: center;
+
+    .nav-list-header {
+        display: flex;
+        flex-direction: row;
+        // align-items: center;
+        padding: 0;
+        position: relative;
+        width: 75%;
+        // background-color: rgb(99, 9, 9);
+        
+        li {
+            list-style: none;
+            margin-right: 5%;
+            display: flex;
+            align-items: center;
+            height: 60px;
+            position: relative;
+
+            a {
+                color: rgb(233, 222, 222);
+                text-decoration: none;
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                // height: inherit;
+
+            }
+
+            span {
+                margin-left: 5px;
+                color:rgb(233, 222, 222);
+            }
+    
+        }
+        li:hover{
+            span {color: rgb(43, 219, 27);}
+            cursor: pointer;
+        }      
+    }
+}
+
+.container-dropdown-brands {
+    width: calc(100vw - 20%);
+    position: absolute;
+    display: flex;
+    top: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 7px 3px rgba(112, 112, 109, 0.91);
+    // background-color: rgb(133, 16, 16);
+    margin-left: 10%;
+    margin-right: 10%;
+    flex-direction: row;
+    visibility: hidden;
+    z-index: 1000;
+    // align-items: flex-end;
+
+    .container-brands {
+        list-style: none;
+        position: relative;
+        padding-left: 3%;
+            
+
+        .nav-forward-to-brand {
+            height: 50px;
+            // border: 1px solid #000;
+            display: flex;
+            align-items: center;
+
+            a {
+                margin-right: 8%;
+                text-decoration: none;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            
+            img {
+                visibility: hidden;
+                transition: all .12s;
+            }
+
+            // puma brand
+            #logo-puma-brand {
+                @include set-size-logo(75px, 60px);
+                
+            }
+
+            // asics brand
+            #logo-asics-brand {
+                @include set-size-logo(90px,50px);
+
+
+            }
+
+            // mizuno brand
+            #logo-mizuno-brand {
+                @include set-size-logo(80px, 40px);
+
+            }
+
+            // biti's brand 
+            #logo-bitis-brand  {
+                @include set-size-logo(32px, 32px);
+            }
+
+            // FILA brand 
+            #logo-fila-brand {
+                @include set-size-logo(60px, 50px);
+            }
+
+            span {
+                color: rgb(36, 36, 36);
+            }
+        }
+
+    
+    }
+
+    .items-brand-advertisement {
+        width: 92%;
+        position: relative;
+        margin-left: 8%;
+        // bottom: 0;
+        height: 300px;
+        // background-color: rgb(25, 148, 107);
+
+        div {
+            width: 75%;
+            height: 100%;
+         
+
+            img {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+                // visibility: hidden;
+                display: none;
+                transition: all .12s;
+            }
+        }
+    }
+    .nav-forward-to-brand:hover {
+        span {
+            color:rgb(43, 219, 27);
+        }
+        img {
+            visibility: visible;
+            transform: translateX(30px);
+        }       
+    }
+          
+}
+
+.container-dropdown-sports {
+    width: calc(100vw - 20%);
+    // height: 100px;
+    top: 100%;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 2px 7px 3px rgba(112, 112, 109, 0.91);
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: row;
+    z-index: 1000;
+    visibility: hidden;
+    
+    .types-of-sports {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        padding-left: 3%;
+        span {
+        
+            
+            font-size: 17px;
+            padding-top: 10px;
+        }
+
+        span:hover {
+            cursor: pointer;
+            color: rgb(43, 219, 27);
+        }
+    }
+
+    .content-left {
+        width: 50%;
+        // background-color: aquamarine;
+        img {
+            padding-top: 10px;
+            height: 200px;
+            margin-right: 20px;
+            width: calc(100% - 20px);
+        }
+    }
+    
+}
+    

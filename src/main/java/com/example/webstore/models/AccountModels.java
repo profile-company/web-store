@@ -8,26 +8,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account")
 public class AccountModels {
+    
     @Id
-    @Column(name = "id")
-    private int id;
+    @Column(name="email")
+    private String email;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "datetime")
+    private String dateCreate;
 
     public AccountModels(){}
-    public AccountModels( String username, String password) {
+    public AccountModels( String email, String password, String Date) {
+
     }
 
-    public int getId() {
-        return id;
+    public String getDateCreate(){
+        return this.dateCreate;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setDateCreate(String date) {
+        this.dateCreate = date;
     }
 
     public String getPassword() {
@@ -38,19 +39,19 @@ public class AccountModels {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
     public String toString() {
         return "Account{" +
                 "password='" + password + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
