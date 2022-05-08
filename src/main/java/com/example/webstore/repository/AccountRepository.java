@@ -10,9 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AccountRepository extends JpaRepository<AccountModels, Integer> {
+public interface AccountRepository extends JpaRepository<AccountModels, String> {
 
-    @Query(value = "SELECT password FROM account u WHERE u.username = ?2",
-            nativeQuery = true)
-    String findPassword(String username);
+    @Query(value = "SELECT password FROM account u WHERE u.email = ?1", nativeQuery = true)
+    String findPassword(String email);
 }
