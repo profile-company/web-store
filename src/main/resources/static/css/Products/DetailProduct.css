@@ -1,0 +1,23 @@
+.size-product{
+    display: flex;
+}
+.swatch-element label{
+    font-weight: bold;
+    background-color: #e8e9eb;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin: 0px 10px;
+}
+.swatch-element input{
+    display: none;
+}
+.swatch-element input:checked+label{
+    background-color: #3beb2b;
+    color: white;
+}
+.swatch-element label{
+    cursor: pointer;
+}
+.btn{
+    margin: 0px 10px;
+}
