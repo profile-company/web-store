@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.util.List;
 
 @Controller
@@ -20,7 +24,7 @@ public class Account {
     private AccountRepository repository;
 
     @PostMapping("/login-author")
-    public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass){
+    public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass, HttpServletResponse response){
 
         // System.out.println(email + pass);
 
@@ -28,6 +32,8 @@ public class Account {
 
         if (author.isPassOfAccount() == true) {
             System.out.println("Đăng nhập thành công");
+            Cookie cookie = new Cookie("name", email);
+            response.addCookie(cookie);
             return "redirect:/";
         }
         else {
