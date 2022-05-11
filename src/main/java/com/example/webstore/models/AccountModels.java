@@ -20,8 +20,10 @@ public class AccountModels {
     private String dateCreate;
 
     public AccountModels(){}
-    public AccountModels( String email, String password, String Date) {
-
+    public AccountModels( String email, String password, String date) {
+        this.email = email;
+        this.password = password;
+        this.dateCreate = date;
     }
 
     public String getDateCreate(){

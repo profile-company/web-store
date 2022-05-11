@@ -46,11 +46,31 @@
     
             <div class="top-right-container">
 
-                <div class="account-container">
+                <div class="account-container" th:if="${account == null}">
 
                     <div class="account-expand">
 
                         <span class="country-name">Tài khoản</span>
+    
+                        <span class="material-symbols-outlined">
+                            expand_more
+                        </span>
+                    </div>
+
+                    <div class="options-account">
+                        <a href="/login" style="text-decoration: none; color: #000">
+                            <span class="account-login">Đăng nhập</span>
+                        </a>
+                        
+                        <span class="account-register">Đăng ký</span>
+                    </div>
+                </div>
+
+                <div class="account-container" th:if="${account != null}">
+
+                    <div class="account-expand">
+
+                        <span th:text="${account.getEmail}"></span>
     
                         <span class="material-symbols-outlined">
                             expand_more
@@ -125,7 +145,7 @@
 
         <div class="navigation-header">
 
-            <ul class="nav-list-header">
+            <ul class="nav-list-header" style="margin-bottom: 0">
 
                 <li class="site-active">
 
