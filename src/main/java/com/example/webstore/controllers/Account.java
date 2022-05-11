@@ -5,7 +5,6 @@ import com.example.webstore.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,24 +20,20 @@ public class Account {
     private AccountRepository repository;
 
     @PostMapping("/login-author")
-    public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass, Model model){
+    public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass){
 
         // System.out.println(email + pass);
 
         author = new Author(email, pass, repository);
-        // ModelMap model;
+
         if (author.isPassOfAccount() == true) {
-            
-            AccountModels account = new AccountModels(email, pass, "2001");
-            model.addAttribute("account", account);
             System.out.println("Đăng nhập thành công");
             return "redirect:/";
         }
         else {
 
             System.out.println("Lỗi đăng nhập");
-            // return "<h1>Đăng nhập thất bại</h1>";
-            return "redirect:/";
+            return "<h1>Đăng nhập thất bại</h1>";
         }
     }
 
