@@ -1,28 +1,26 @@
 package com.example.webstore.models;
 
-<<<<<<< HEAD
+import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.JoinColumnOrFormula;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
-=======
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
+
 
 @Entity
 @Table(name = "customer")
 public class CustomerModels {
-<<<<<<< HEAD
 
-    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-=======
     @Id
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
     @Column(name = "id")
     private int id;
 
@@ -33,11 +31,7 @@ public class CustomerModels {
     private String lastname;
 
     @Column(name = "dateborn")
-<<<<<<< HEAD
-    private OffsetDateTime dateBorn;
-=======
-    private String dateborn;
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
+    private String dateBorn;
 
     @Column(name = "sex")
     private String sex;
@@ -45,8 +39,7 @@ public class CustomerModels {
     @Column(name = "account_email")
     private String accountEmail;
 
-<<<<<<< HEAD
-=======
+
     public int getId() {
         return id;
     }
@@ -55,23 +48,17 @@ public class CustomerModels {
         this.id = id;
     }
 
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
     public String getFirstname() {
         return firstname;
     }
 
-<<<<<<< HEAD
     public CustomerModels() {
-        this.firstname = null;
-        this.lastname = null;
-        this.dateBorn = null;
-        this.sex = null;
-        this.accountEmail = null;
+
     }
 
     public CustomerModels(String firstname,
                           String lastname,
-                          OffsetDateTime dateBorn,
+                          String dateBorn,
                           String sex,
                           String accountEmail) {
         this.firstname = firstname;
@@ -81,8 +68,6 @@ public class CustomerModels {
         this.accountEmail = accountEmail;
     }
 
-=======
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
@@ -95,21 +80,12 @@ public class CustomerModels {
         this.lastname = lastname;
     }
 
-<<<<<<< HEAD
-    public OffsetDateTime getDateBorn() {
+    public String getDateBorn() {
         return dateBorn;
     }
 
-    public void setDateBorn(OffsetDateTime dateBorn) {
+    public void setDateBorn(String dateBorn) {
         this.dateBorn = dateBorn;
-=======
-    public String getDateborn() {
-        return dateborn;
-    }
-
-    public void setDateborn(String dateborn) {
-        this.dateborn = dateborn;
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
     }
 
     public String getSex() {
@@ -130,19 +106,9 @@ public class CustomerModels {
 
     @Override
     public String toString() {
-<<<<<<< HEAD
         return "CustomerModels{" + "id=" + id +
                 ", firstname='" + firstname + '\'' + ", lastname='" + lastname + '\'' +
                 ", dateBorn=" + dateBorn + ", sex='" + sex + '\'' + ", accountEmail='" + accountEmail + '\'' + '}';
-=======
-        return "CustomerModels{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", dateborn='" + dateborn + '\'' +
-                ", sex='" + sex + '\'' +
-                ", accountEmail='" + accountEmail + '\'' +
-                '}';
->>>>>>> 90f8a670535fd20720da35a0b65ef9f8c7952b1f
+
     }
 }

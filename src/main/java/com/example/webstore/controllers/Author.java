@@ -26,6 +26,13 @@ public class Author {
         return false;
     }
 
+    public boolean isAlreadyEmail() {
+        if (repo.existsEmail(this.email) != 0) {
+            return false;
+        }
+        else { return true; }
+    }
+
     private String findPass() {
 
         String tmp = repo.findPassword(this.email);
