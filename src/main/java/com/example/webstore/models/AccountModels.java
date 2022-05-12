@@ -19,7 +19,16 @@ public class AccountModels {
     @Column(name = "datetime")
     private String dateCreate;
 
-    public AccountModels(){}
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    public AccountModels() {
+        super();
+        this.enabled = false;
+    }
+
+//    public AccountModels(){}
+
     public AccountModels( String email, String password, String Date) {
 
     }
@@ -45,6 +54,14 @@ public class AccountModels {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

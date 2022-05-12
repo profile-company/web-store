@@ -17,4 +17,6 @@ public interface AccountRepository extends JpaRepository<AccountModels, String> 
 
     @Query(value = "SELECT COUNT(email) from account u where u.email = ?1", nativeQuery = true)
     int existsEmail(String email);
+
+    // create query insert new account into account model
 }
