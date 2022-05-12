@@ -2,7 +2,9 @@ package com.example.webstore.controllers;
 
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
+import com.example.webstore.models.VerifyCode;
 import com.example.webstore.repository.AccountRepository;
+import com.example.webstore.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.HttpConstraintElement;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -24,6 +29,9 @@ public class Account {
     private Author author;
     @Autowired
     private AccountRepository repository;
+
+    @Autowired
+    private UserServices services;
 
     @PostMapping("/login-author")
     public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass, HttpServletResponse response){
@@ -49,15 +57,28 @@ public class Account {
      public String verifyRegistration(@RequestParam(value = "confirm_pass") String confirmPass,
                                       @RequestParam(value = "password") String  password,
                                       @RequestParam(value = "sex") String sex,
-                                      @ModelAttribute("user") CustomerModels cus){
+                                      @ModelAttribute("user") CustomerModels cus,
+                                      HttpServletRequest request){
+
+        LocalDate currentDate = LocalDate.now();
+        AccountModels newAccount = new AccountModels(cus.getAccountEmail(), password, currentDate.toString());
+        VerifyCode verifyCode = new VerifyCode();
+        cus.setSex(sex);
+
+
+//        services.register(verifyCode, newAccount,cus ,getSiteUrl(request));
 
         System.out.println(cus.toString());
-        System.out.println(confirmPass);
-        System.out.println(sex);
+//        System.out.println(confirmPass);
+//        System.out.println(sex);
 
          return "home";
      }
 
+     public String getSiteUrl(HttpServletRequest request) {
+        String url = request.getRequestURI().toString();
+        return url.replace(request.getServletPath(), "");
+     }
 //     @PostMapping("/checklogin")
 //     public String CheckLogin(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, Model model){
 
