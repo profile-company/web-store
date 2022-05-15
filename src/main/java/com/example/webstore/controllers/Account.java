@@ -4,7 +4,9 @@ import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
 import com.example.webstore.models.VerifyCode;
 import com.example.webstore.repository.AccountRepository;
+import com.example.webstore.repository.VerifyCodeRepository;
 import com.example.webstore.services.UserServices;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +23,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
 public class Account {
 
     private Author author;
+    private static String EMAIL = "";
     @Autowired
     private AccountRepository repository;
+
+    @Autowired
+    private VerifyCodeRepository repoCode;
 
     @Autowired
     private UserServices services;
@@ -41,14 +49,14 @@ public class Account {
         author = new Author(email, pass, repository);
 
         if (author.isPassOfAccount() == true) {
-            System.out.println("Đăng nhập thành công");
+//            System.out.println("Đăng nhập thành công");
             Cookie cookie = new Cookie("name", email);
             response.addCookie(cookie);
             return "redirect:/";
         }
         else {
 
-            System.out.println("Lỗi đăng nhập");
+//            System.out.println("Lỗi đăng nhập");
             return "<h1>Đăng nhập thất bại</h1>";
         }
     }
@@ -60,43 +68,42 @@ public class Account {
                                       @ModelAttribute("user") CustomerModels cus,
                                       HttpServletRequest request){
 
-        LocalDate currentDate = LocalDate.now();
-        AccountModels newAccount = new AccountModels(cus.getAccountEmail(), password, currentDate.toString());
-        VerifyCode verifyCode = new VerifyCode();
-        cus.setSex(sex);
+        //
+         String email = cus.getAccountEmail();
+         LocalDateTime timeCreate = LocalDateTime.now();
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+         String timeCreateFormatted = timeCreate.format(formatter);
+         int isEmailAlready = repository.existsEmail(email);
 
+        // check email already before ?
+        if (isEmailAlready > 0) {
+            return "redirect:/verify-registration";
+        }
 
-//        services.register(verifyCode, newAccount,cus ,getSiteUrl(request));
+        EMAIL = cus.getAccountEmail();
+        AccountModels newAccount = new AccountModels(email, password,timeCreateFormatted, false);
 
-        System.out.println(cus.toString());
-//        System.out.println(confirmPass);
-//        System.out.println(sex);
+        services.register(newAccount,cus ,getSiteUrl(request));
 
-         return "home";
+         return "redirect:/email/verify";
      }
 
      public String getSiteUrl(HttpServletRequest request) {
-        String url = request.getRequestURI().toString();
+        String url = request.getRequestURL().toString();
         return url.replace(request.getServletPath(), "");
      }
-//     @PostMapping("/checklogin")
-//     public String CheckLogin(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, Model model){
 
-//         System.out.println(username + "  " + password);
-//         if (username == null || password == null) {
-//             // message error
-//             System.out.println("Error");
-//             return "login";
-//         }
+    @GetMapping("/verify")
+    public String verifyAccount(@RequestParam("code") String code) {
+        if (services.verify(EMAIL, code)) {
 
-//         String data = repository.findPassword(username);
-//         if (data.equals(password)) {
-// //            AccountModels account = new Account(username, password);
-// //            model.addAttribute("account", account);
-//             return "home";
-//         }
-//         else {  return "login"; }
+            VerifyCode verifyCode = new VerifyCode();
+            verifyCode.setCode(null);
+            verifyCode.setEmail(EMAIL);
+            repoCode.save(verifyCode);
 
-// //        return "home";
-//     }
+            return "redirect:/success";
+        }
+        return "redirect:/fail";
+    }
 }

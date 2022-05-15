@@ -8,7 +8,6 @@ import com.example.webstore.repository.CustomerRepository;
 import com.example.webstore.repository.VerifyCodeRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -33,11 +32,12 @@ public class UserServices {
     @Autowired
     private CustomerRepository repoCustomer;
 
-    public void register(VerifyCode verifyCode, AccountModels account,CustomerModels customer , String url) {
+    public void register(AccountModels account,CustomerModels customer , String url) {
 
         String randomCode = RandomString.make(64);
+        VerifyCode verifyCode = new VerifyCode();
         verifyCode.setCode(randomCode);
-        verifyCode.setAccountModels(account);
+        verifyCode.setEmail(account.getEmail());
 
         repoAccount.save(account);
         repoCode.save(verifyCode);
@@ -47,6 +47,7 @@ public class UserServices {
     }
 
     private void sendVerificationEmail(CustomerModels customer, VerifyCode code,String url) {
+
         String toAddress = customer.getAccountEmail();
         String senderName = "Web shop sport";
         String fromAddress = "thng1642@gamil.com";
@@ -81,5 +82,21 @@ public class UserServices {
         }
 
         mailSender.send(message);
+    }
+
+    public boolean verify(String email, String code) {
+
+        String myCode = repoCode.findVerifyCodeByEmail(email);
+
+        if (code.equals(myCode)) {
+
+            AccountModels account = repoAccount.findAccountByEmail(email);
+            account.setEnabled(true);
+            // can you fix bug here
+            repoAccount.save(account);
+
+            return true;
+        }
+        else {return false;}
     }
 }

@@ -1,6 +1,7 @@
 package com.example.webstore.controllers;
 
 import com.example.webstore.models.CustomerModels;
+import jdk.jfr.Frequency;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,21 @@ public class home {
 
         model.addAttribute("user", userDto);
         return "sigin";
+    }
+
+    @GetMapping("/email/verify")
+    public String emailVerify() {return "verify";}
+
+    @GetMapping("/success")
+    public String success() {return "success";}
+
+    @GetMapping("/fail")
+    public String fail() {return "fail";}
+
+    @GetMapping("/cart")
+    public String cart() {
+
+        return "cart";
     }
 }
 

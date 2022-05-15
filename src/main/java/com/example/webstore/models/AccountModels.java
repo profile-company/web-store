@@ -23,19 +23,26 @@ public class AccountModels {
     private boolean enabled;
 
     public AccountModels() {
-        super();
-        this.enabled = false;
+
     }
 
-//    public AccountModels(){}
+    public AccountModels(String email, String password, String dateCreate, boolean enabled) {
+        this.email = email;
+        this.password = password;
+        this.dateCreate = dateCreate;
+        this.enabled = enabled;
+    }
 
-    public AccountModels( String email, String password, String Date) {
-
+    public AccountModels(String email, String password, String dateCreate) {
+        this.email = email;
+        this.password = password;
+        this.dateCreate = dateCreate;
     }
 
     public String getDateCreate(){
         return this.dateCreate;
     }
+
     public void setDateCreate(String date) {
         this.dateCreate = date;
     }
@@ -66,9 +73,6 @@ public class AccountModels {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "AccountModels{" + "email='" + email + '\'' + ", password='" + password + '\'' + ", dateCreate='" + dateCreate + '\'' + ", enabled=" + enabled + '}';
     }
 }
