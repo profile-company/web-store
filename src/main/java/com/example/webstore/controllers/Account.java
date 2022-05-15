@@ -62,11 +62,12 @@ public class Account {
 
         LocalDate currentDate = LocalDate.now();
         AccountModels newAccount = new AccountModels(cus.getAccountEmail(), password, currentDate.toString());
+        System.out.println(newAccount);
         VerifyCode verifyCode = new VerifyCode();
         cus.setSex(sex);
 
 
-//        services.register(verifyCode, newAccount,cus ,getSiteUrl(request));
+        services.register(verifyCode, newAccount,cus ,getSiteUrl(request));
 
         System.out.println(cus.toString());
 //        System.out.println(confirmPass);

@@ -19,4 +19,5 @@ public interface AccountRepository extends JpaRepository<AccountModels, String> 
     int existsEmail(String email);
 
     // create query insert new account into account model
+
 }
