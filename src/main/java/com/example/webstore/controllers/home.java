@@ -1,19 +1,35 @@
 package com.example.webstore.controllers;
 
 import com.example.webstore.models.CustomerModels;
+import com.example.webstore.models.ProductModels;
+import com.example.webstore.repository.ProductRepository;
 import jdk.jfr.Frequency;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
 public class home {
 
+    @Autowired
+    ProductRepository productRepo;
+
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
+
+        List<ProductModels> listProducts = productRepo.getAllProducts();
+
+        //ProductModels productDto = new ProductModels();
+//        productDto.setName("Thuan");
+//        System.out.println(listProducts.get(0));
+
+        model.addAttribute("products", listProducts);
+
         return "home";
     }
 
