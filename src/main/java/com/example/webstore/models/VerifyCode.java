@@ -3,31 +3,33 @@ package com.example.webstore.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "verifycode")
 public class VerifyCode {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "code", length = 64)
     private String code;
 
-    @OneToOne(targetEntity = AccountModels.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name="email")
-    private AccountModels accountModels;
+    @Column(name = "account_email")
+    private String email;
 
     public VerifyCode() {}
 
-    public VerifyCode(Long id, String code, AccountModels accountModels) {
+    public VerifyCode(Integer id, String code, String email) {
         this.id = id;
         this.code = code;
-        this.accountModels = accountModels;
+        this.email = email;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,11 +41,16 @@ public class VerifyCode {
         this.code = code;
     }
 
-    public AccountModels getAccountModels() {
-        return accountModels;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAccountModels(AccountModels accountModels) {
-        this.accountModels = accountModels;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "VerifyCode{" + "id=" + id + ", code='" + code + '\'' + ", email='" + email + '\'' + '}';
     }
 }
