@@ -24,9 +24,12 @@ public interface AccountRepository extends JpaRepository<AccountModels, String> 
     AccountModels findAccountByEmail(String email);
 
     // create query insert new account into account model
+
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO account(email, password, datetime, enabled) values (?1, ?2, ?3, ?4)",
     nativeQuery = true)
     void insertNewAccount(String email, String password, String date, boolean enabled);
+
 }

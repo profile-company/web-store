@@ -68,6 +68,8 @@ public class Account {
                                       @ModelAttribute("user") CustomerModels cus,
                                       HttpServletRequest request){
 
+
+
         //
          String email = cus.getAccountEmail();
          LocalDateTime timeCreate = LocalDateTime.now();
@@ -75,13 +77,16 @@ public class Account {
          String timeCreateFormatted = timeCreate.format(formatter);
          int isEmailAlready = repository.existsEmail(email);
 
+
         // check email already before ?
         if (isEmailAlready > 0) {
             return "redirect:/verify-registration";
         }
 
+
         EMAIL = cus.getAccountEmail();
         AccountModels newAccount = new AccountModels(email, password,timeCreateFormatted, false);
+
 
         services.register(newAccount,cus ,getSiteUrl(request));
 
