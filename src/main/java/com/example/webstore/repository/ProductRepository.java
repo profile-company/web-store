@@ -13,4 +13,11 @@ public interface ProductRepository extends JpaRepository<ProductModels, Integer>
 
     @Query(value = "SELECT * FROM product", nativeQuery = true)
     List<ProductModels> getAllProducts();
+
+    @Query(value = "SELECT * FROM product u where u.product_id = ?1",
+        nativeQuery = true)
+    ProductModels getOneProduct(int id);
+
+    @Query(value = "SELECT category_id FROM product u where u.product_id = ?1", nativeQuery = true)
+    int getIdCategoryProduct(int id);
 }
