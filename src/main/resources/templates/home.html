@@ -52,12 +52,6 @@
 
         <div class = "row g-4 my-5 mx-auto owl-carousel owl-theme">
 
-            <!--dynamic -->
-<!--            <div class = "col product-item mx-auto" th:each="item : ${products}">-->
-<!--                <span th:text="*{item.getName()}"></span>-->
-<!--                <img th:src="@{${'/images/Product_Image/Adidas/'+ item.getName() +'/1.webp'}}" alt="khong co" class = "img-fluid d-block mx-auto">-->
-<!--            </div>-->
-
             <div class = "col product-item mx-auto"  th:each="item : ${products}">
                 <div class = "product-img">
                     <img th:src="@{${'/images/Product_Image/Adidas/'+ item.getName() +'/1.webp'}}" alt="khong co" class = "img-fluid d-block mx-auto">

@@ -11,7 +11,7 @@
 <body>
     <div th:replace="header :: myheader"></div>
 
-    <div class="container">
+    <div class="container" >
         <div class="row">
             <div class="col-6">
                 <div class="image-product" th:object="${product}">
@@ -19,42 +19,39 @@
                 </div>
             </div>
 
-            <div class="col-6">
+            <form class="col-6" th:action="@{/cart}" method="post">
+
+                <input type="hidden" th:name="idProduct" th:value="${product.id}">
+
                 <div class="detail">
-                    <div class="loai" style="font-weight: bold; color: #acacac">
-                        loai sẩn phẩm
+                    <div class="loai" th:object="${category}" style="font-weight: bold; color: #acacac">
+                        <span th:text="${category.name}"></span>
                     </div>
                     <div class="name-product">
-                        <h1>Teen san pham</h1>
+                        <h1 th:text="${product.getName()}"></h1>
                     </div>
-                    <div style="font-weight: bold; color: #2bdb1b" class="price-product">
-                        giá sản phẩmm
+                    <div style="font-weight: bold; color: #2bdb1b" class="price-product" >
+                        <span th:text="${product.price} + ' VND'"></span>
                     </div>
+
+                    <div th:text="${category.description}"></div>
+
                     <div>Size</div>
 
                     <div class="btn-group" th:each="item : ${size}">
 
-                        <input type="radio" class="btn-check" th:name="selected" th:id="*{item}">
+                        <input type="radio" class="btn-check" th:value="*{item}" th:name="selected" th:id="*{item}">
                         <label class="btn btn-secondary" th:for="*{item}" th:text="*{item}"></label>
-
                     </div>
 
-<!--                    <div class="btn-group">-->
-<!--                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked />-->
-<!--                        <label class="btn btn-secondary" for="option1">34</label>-->
-
-<!--                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" />-->
-<!--                        <label class="btn btn-secondary" for="option2">35</label>-->
-
-<!--                        <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" />-->
-<!--                        <label class="btn btn-secondary" for="option3">36</label>-->
-
-<!--                        <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" />-->
-<!--                        <label class="btn btn-secondary" for="option4">37</label>-->
-<!--                    </div>-->
                 </div>
-            </div>
+
+                <input type="submit" value="Add to cart">
+
+            </form>
+
         </div>
+
     </div>
 </body>
 </html>
