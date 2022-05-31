@@ -1,20 +1,25 @@
 package com.example.webstore.controllers;
 
 import com.example.webstore.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 // import org.springframework.beans.factory.annotation.Autowired;
 
-public class Author {
+@Service
+public class Authentication {
 
+    @Autowired
     private AccountRepository repo;
+
     private String password;
     private String email;
 
-    public Author(String email, String password, AccountRepository repo) {
-        this.email = email;
-        this.password = password;
-        this.repo = repo;
-    }
+//    public Authentication(String email, String password, AccountRepository repo) {
+//        this.email = email;
+//        this.password = password;
+//        this.repo = repo;
+//    }
 
     public Boolean isPassOfAccount() {
         String myPass = findPass();
@@ -26,12 +31,12 @@ public class Author {
         return false;
     }
 
-    public boolean isAlreadyEmail() {
-        if (repo.existsEmail(this.email) != 0) {
-            return false;
-        }
-        else { return true; }
-    }
+//    public boolean isAlreadyEmail() {
+//        if (repo.existsEmail(this.email) != 0) {
+//            return false;
+//        }
+//        else { return true; }
+//    }
 
     private String findPass() {
 

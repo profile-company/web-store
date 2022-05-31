@@ -2,41 +2,50 @@ package com.example.webstore.controllers;
 
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
-import com.example.webstore.models.VerifyCode;
 import com.example.webstore.repository.AccountRepository;
-import com.example.webstore.repository.VerifyCodeRepository;
+import com.example.webstore.services.PasswordSecurity;
 import com.example.webstore.services.UserServices;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.HttpConstraintElement;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
-import java.time.LocalDate;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
+
+/**
+ * The Account class provides controller for users can activities such as login, sign up.
+ * @author Nguyen Thuan
+ * @version 1.00 20 May 2022
+ *
+ * Modification Logs:
+ *      DATE            AUTHOR          DESCRIPTION
+ * ---------------------------------------------------------------------------------------
+ *      30-May-2022     Nguyen Thuan    Encoded password before save into DB when register
+ *      31-May-2022     Nguyen Thuan    Update code for use-case login consist of login and
+ *                                      forget password.
+ */
 @Controller
 public class Account {
 
-    private Author author;
+    private Authentication author;
     private static String EMAIL = "";
     @Autowired
-    private AccountRepository repository;
+    private AccountRepository repoAccount;
 
     @Autowired
-    private VerifyCodeRepository repoCode;
+    private PasswordSecurity passwordSecurity;
+
+//    @Autowired
+//    private VerifyCodeRepository repoCode;
 
     @Autowired
     private UserServices services;
@@ -46,44 +55,54 @@ public class Account {
 
         // System.out.println(email + pass);
 
-        author = new Author(email, pass, repository);
+//        author = new Authentication(email, pass, repoAccount);
 
-        if (author.isPassOfAccount() == true) {
-//            System.out.println("Đăng nhập thành công");
-            Cookie cookie = new Cookie("name", email);
-            response.addCookie(cookie);
-            return "redirect:/";
-        }
-        else {
-
-//            System.out.println("Lỗi đăng nhập");
-            return "<h1>Đăng nhập thất bại</h1>";
-        }
+//        if (author.isPassOfAccount() == true) {
+////            System.out.println("Đăng nhập thành công");
+//            Cookie cookie = new Cookie("name", email);
+//            response.addCookie(cookie);
+//            return "redirect:/";
+//        }
+//        else {
+//
+////            System.out.println("Lỗi đăng nhập");
+//            return "<h1>Đăng nhập thất bại</h1>";
+//        }
+        return "";
     }
 
-     @PostMapping("/verify-registration")
-     public String verifyRegistration(@RequestParam(value = "confirm_pass") String confirmPass,
-                                      @RequestParam(value = "password") String  password,
-                                      @RequestParam(value = "sex") String sex,
-                                      @ModelAttribute("user") CustomerModels cus,
-                                      HttpServletRequest request){
+     @PostMapping("/account/register")
+     public String accountRegister(
+                @RequestParam(value = "password") String  password,
+                @ModelAttribute("user") CustomerModels cus,
+                @ModelAttribute("account") @Valid AccountModels account,
+                BindingResult bindingResult,
+                HttpServletRequest request) {
 
-        //
-         String email = cus.getAccountEmail();
-         LocalDateTime timeCreate = LocalDateTime.now();
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-         String timeCreateFormatted = timeCreate.format(formatter);
-         int isEmailAlready = repository.existsEmail(email);
+         // check email already before ?
+         if (bindingResult.hasErrors()) {
+             return "signup";
+         }
+         EMAIL = account.getEmail();
 
-        // check email already before ?
-        if (isEmailAlready > 0) {
-            return "redirect:/verify-registration";
-        }
+        /**
+         * 1. Create new account for a customer which just register.
+         *     1.1. Encode password of user account, which inputted before.
+         *          Then set password encoded for instance.
+         *     1.2. Get time current and set it for instance.
+         *     1.3. Set properties enabled of instance is false.
+         */
+         String encodePassword = passwordSecurity.passwordEncoder(password); // 1.1
+         account.setPassword(encodePassword); // 1.1
+         LocalDateTime timeCreate = LocalDateTime.now(); // 1.2
+         DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss"); // 1.2
+         account.setDateCreate(timeCreate.format(formatter)); // 1.2
+         account.setEnabled(false); // 1.3
 
-        EMAIL = cus.getAccountEmail();
-        AccountModels newAccount = new AccountModels(email, password,timeCreateFormatted, false);
+         cus.setAccountEmail(EMAIL);
 
-        services.register(newAccount,cus ,getSiteUrl(request));
+         services.register(account, cus, getSiteUrl(request));
 
          return "redirect:/email/verify";
      }
@@ -96,11 +115,6 @@ public class Account {
     @GetMapping("/verify")
     public String verifyAccount(@RequestParam("code") String code) {
         if (services.verify(EMAIL, code)) {
-
-            VerifyCode verifyCode = new VerifyCode();
-            verifyCode.setCode(null);
-            verifyCode.setEmail(EMAIL);
-            repoCode.save(verifyCode);
 
             return "redirect:/success";
         }
