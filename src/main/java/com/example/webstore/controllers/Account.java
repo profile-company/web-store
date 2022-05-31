@@ -1,5 +1,6 @@
 package com.example.webstore.controllers;
 
+import com.example.webstore.dto.UserDto;
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
 import com.example.webstore.repository.AccountRepository;
@@ -36,39 +37,34 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class Account {
 
-    private Authentication author;
     private static String EMAIL = "";
+
     @Autowired
     private AccountRepository repoAccount;
 
     @Autowired
     private PasswordSecurity passwordSecurity;
 
-//    @Autowired
-//    private VerifyCodeRepository repoCode;
-
     @Autowired
     private UserServices services;
 
-    @PostMapping("/login-author")
-    public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass, HttpServletResponse response){
+    @PostMapping("/login")
+    public String loginAccount(@ModelAttribute("user") @Valid UserDto userDto,
+            BindingResult bindingResult,
+            HttpServletResponse response){
 
-        // System.out.println(email + pass);
+//         System.out.println(userDto.toString());
 
-//        author = new Authentication(email, pass, repoAccount);
+         if (bindingResult.hasErrors()) {
+//             System.out.println(bindingResult.getFieldError());
+             return "login";
+         }
 
-//        if (author.isPassOfAccount() == true) {
-////            System.out.println("Đăng nhập thành công");
-//            Cookie cookie = new Cookie("name", email);
-//            response.addCookie(cookie);
-//            return "redirect:/";
-//        }
-//        else {
-//
-////            System.out.println("Lỗi đăng nhập");
-//            return "<h1>Đăng nhập thất bại</h1>";
-//        }
-        return "";
+//        System.out.println("Đăng nhập thành công");
+        Cookie cookie = new Cookie("name", userDto.getEmail());
+        response.addCookie(cookie);
+
+        return "redirect:/";
     }
 
      @PostMapping("/account/register")
