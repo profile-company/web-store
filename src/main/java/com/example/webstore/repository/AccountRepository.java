@@ -24,15 +24,12 @@ public interface AccountRepository extends JpaRepository<AccountModels, String> 
     AccountModels findEnabledByEmail(String email);
 
     // create query insert new account into account model
+
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO account(email, password, datetime, enabled) values (?1, ?2, ?3, ?4)",
             nativeQuery = true)
     void insertNewAccount(String email, String password, String date, boolean enabled);
 
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE account u SET u.enabled = ?1 WHERE u.email = ?2",
-            nativeQuery = true)
-    void updateEnabled(boolean flag, String email);
 }

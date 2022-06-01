@@ -67,41 +67,6 @@ public class Account {
         return "redirect:/";
     }
 
-     @PostMapping("/account/register")
-     public String accountRegister(
-                @RequestParam(value = "password") String  password,
-                @ModelAttribute("user") CustomerModels cus,
-                @ModelAttribute("account") @Valid AccountModels account,
-                BindingResult bindingResult,
-                HttpServletRequest request) {
-
-         // check email already before ?
-         if (bindingResult.hasErrors()) {
-             return "signup";
-         }
-         EMAIL = account.getEmail();
-
-        /**
-         * 1. Create new account for a customer which just register.
-         *     1.1. Encode password of user account, which inputted before.
-         *          Then set password encoded for instance.
-         *     1.2. Get time current and set it for instance.
-         *     1.3. Set properties enabled of instance is false.
-         */
-         String encodePassword = passwordSecurity.passwordEncoder(password); // 1.1
-         account.setPassword(encodePassword); // 1.1
-         LocalDateTime timeCreate = LocalDateTime.now(); // 1.2
-         DateTimeFormatter formatter = DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss"); // 1.2
-         account.setDateCreate(timeCreate.format(formatter)); // 1.2
-         account.setEnabled(false); // 1.3
-
-         cus.setAccountEmail(EMAIL);
-
-         services.register(account, cus, getSiteUrl(request));
-
-         return "redirect:/email/verify";
-     }
 
      public String getSiteUrl(HttpServletRequest request) {
         String url = request.getRequestURL().toString();
