@@ -1,5 +1,6 @@
 package com.example.webstore.models;
 
+import com.example.webstore.annotations.EmailValidation;
 import org.apache.tomcat.jni.Local;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.JoinColumnOrFormula;
@@ -13,6 +14,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "customer")
@@ -23,18 +27,26 @@ public class CustomerModels {
     @Column(name = "id")
     private int id;
 
+    @NotEmpty(message = "User's first name cannot empty.")
+    @Size(min = 3, max = 45)
     @Column(name = "firstname")
     private String firstname;
 
+    @NotEmpty(message = "User's last name cannot empty.")
+    @Size(min = 3, max = 45)
     @Column(name = "lastname")
     private String lastname;
 
+    @NotEmpty(message = "User's born date cannot empty.")
     @Column(name = "dateborn")
     private String dateBorn;
 
+    @NotEmpty(message = "User's sex cannot empty.")
     @Column(name = "sex")
     private String sex;
 
+    @NotEmpty(message = "User's email cannot empty.")
+    @Email
     @Column(name = "account_email")
     private String accountEmail;
 
