@@ -34,6 +34,7 @@ import java.time.format.DateTimeFormatter;
  *      30-May-2022     Nguyen Thuan    Encoded password before save into DB when register
  *      31-May-2022     Nguyen Thuan    Update code for use-case login consist of login and
  *                                      forget password.
+ *      06-June-2022    Nguyen Thuan    Add Singleton object.
  */
 @Controller
 public class Account {
