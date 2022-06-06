@@ -4,7 +4,6 @@ import com.example.webstore.dto.UserDto;
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
 import com.example.webstore.repository.AccountRepository;
-import com.example.webstore.services.AccountSingleton;
 import com.example.webstore.services.PasswordSecurity;
 import com.example.webstore.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,53 +48,34 @@ public class Account {
     @Autowired
     private UserServices services;
 
-    /**
-     * ...method loginAccount documentation comment...
-     * get data from request in form. Authentication user account.
-     * @param userDto save date sent from form.
-     * @param bindingResult check error when login.
-     * @param response use to send cookie.
-     * @return return a view page.
-     */
     @PostMapping("/login")
     public String loginAccount(@ModelAttribute("user") @Valid UserDto userDto,
             BindingResult bindingResult,
             HttpServletResponse response){
 
-        // check error when button login clicked.
-        if (bindingResult.hasErrors()) {
-         return "login"; // redirect to view login.
-        }
+//         System.out.println(userDto.toString());
 
-        AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
-        accountSingleton.setUserDto(userDto);
+         if (bindingResult.hasErrors()) {
+//             System.out.println(bindingResult.getFieldError());
+             return "login";
+         }
 
-        Cookie cookie = new Cookie("name", accountSingleton.getUserDto()
-                .getEmail().split("@")[0]);
+//        System.out.println("Đăng nhập thành công");
+        Cookie cookie = new Cookie("name", userDto.getEmail());
         response.addCookie(cookie);
 
         return "redirect:/";
     }
 
-    /**
-     * ..method getSiteUrl documentation comment...
-     * @param request get HttpServletRequest
-     * @return return url to verify account.
-     */
-    public String getSiteUrl(HttpServletRequest request) {
+
+     public String getSiteUrl(HttpServletRequest request) {
         String url = request.getRequestURL().toString();
         return url.replace(request.getServletPath(), "");
-    }
+     }
 
-    /**
-     * ...method verifyAccount documentation comment...
-     * @param code get code from request parameter code url.
-     * @return return result.
-     */
     @GetMapping("/verify")
     public String verifyAccount(@RequestParam("code") String code) {
-        String email = AccountSingleton.getAccountSingleton().getUserDto().getEmail();
-        if (services.verify(email, code)) {
+        if (services.verify(EMAIL, code)) {
 
             return "redirect:/success";
         }
