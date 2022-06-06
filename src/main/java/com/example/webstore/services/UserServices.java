@@ -16,57 +16,37 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 
-/**
- * The UserServices class provides services for user when sign up.
- * @author Nguyen Thuan
- * @version 1.00 30 May 2022
- *
- * Modification Logs:
- *      DATE            AUTHOR          DESCRIPTION
- * -------------------------------------------------------------------------
- *      30-May-2022     Nguyen Thuan    Encoded password before save into DB
- */
 
 @Service
 public class UserServices {
 
-//    @Autowired
+    @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
     private VerifyCodeRepository repoCode;
 
     @Autowired
-    private CustomerRepository repoCustomer;
-
-    @Autowired
     private AccountRepository repoAccount;
 
-    public void register(AccountModels account, CustomerModels customer,
-            String url) {
+    @Autowired
+    private CustomerRepository repoCustomer;
+
+    public void register(AccountModels account,CustomerModels customer , String url) {
 
         String randomCode = RandomString.make(64);
         VerifyCode verifyCode = new VerifyCode();
         verifyCode.setCode(randomCode);
         verifyCode.setEmail(account.getEmail());
 
-        /**
-         * Save objects (AccountModels, VerifyCode and CustomerModels)
-         * into database of system.
-         */
-        repoAccount.insertNewAccount(account.getEmail(), account.getPassword(),
-                account.getDateCreate(), account.isEnabled());
-//        repoAccount.save(account);
-        repoCustomer.insertNewCustomer(customer.getFirstname(), customer.getLastname(),
-                customer.getDateBorn(), customer.getSex(), customer.getAccountEmail());
+        repoAccount.save(account);
         repoCode.save(verifyCode);
+        repoCustomer.save(customer);
 
-        /** Performing send token for e-mail which user inputted before. */
         sendVerificationEmail(customer, verifyCode, url);
     }
 
-    private void sendVerificationEmail(CustomerModels customer, VerifyCode code,
-            String url) {
+    private void sendVerificationEmail(CustomerModels customer, VerifyCode code,String url) {
 
         String toAddress = customer.getAccountEmail();
         String senderName = "Web shop sport";
@@ -110,8 +90,10 @@ public class UserServices {
 
         if (code.equals(myCode)) {
 
-            repoAccount.updateEnabled(true, email);
-            repoCode.deleteVerifyCodeOfAccount(email);
+            AccountModels account = repoAccount.findAccountByEmail(email);
+            account.setEnabled(true);
+            // can you fix bug here
+            repoAccount.save(account);
 
             return true;
         }

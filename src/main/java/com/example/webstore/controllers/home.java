@@ -1,7 +1,5 @@
 package com.example.webstore.controllers;
 
-import com.example.webstore.dto.UserDto;
-import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
 import com.example.webstore.models.ProductModels;
 import com.example.webstore.repository.ProductRepository;
@@ -9,11 +7,9 @@ import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,28 +34,17 @@ public class home {
         return "home";
     }
 
-    /**
-     * ...methode login documentation comment...
-     * @param model supply attributes used for rendering view be returned
-     * @return return view login
-     */
     @GetMapping("/login")
-    public String login(Model model) {
-
-        UserDto userDto = new UserDto();
-        model.addAttribute("user", userDto);
+    public String login() {
         return "login";
     }
 
     @GetMapping("/account/register")
     public  String register(Model model) {
-
         CustomerModels userDto = new CustomerModels();
-        AccountModels accountDto = new AccountModels();
 
         model.addAttribute("user", userDto);
-        model.addAttribute("account", accountDto);
-        return "signup";
+        return "sigin";
     }
 
     @GetMapping("/email/verify")
@@ -70,13 +55,6 @@ public class home {
 
     @GetMapping("/fail")
     public String fail() {return "fail";}
-
-    @GetMapping("/login-admin")
-    public String loginAdmin(Model model) {
-
-        // admin
-        return "login";
-    }
 
 }
 
