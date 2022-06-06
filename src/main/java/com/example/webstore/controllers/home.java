@@ -38,6 +38,11 @@ public class home {
         return "home";
     }
 
+    /**
+     * ...methode login documentation comment...
+     * @param model supply attributes used for rendering view be returned
+     * @return return view login
+     */
     @GetMapping("/login")
     public String login(Model model) {
 
@@ -65,6 +70,13 @@ public class home {
 
     @GetMapping("/fail")
     public String fail() {return "fail";}
+
+    @GetMapping("/login-admin")
+    public String loginAdmin(Model model) {
+
+        // admin
+        return "login";
+    }
 
 }
 

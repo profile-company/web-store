@@ -7,6 +7,19 @@
 
     <script src="https://kit.fontawesome.com/dd9a768261.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/Login/account.css}" href="../static/css/Login/account.css">
+    <style>
+        .error-email, .error-pass {
+            color: red;
+            padding: 0 !important;
+            margin: -17px 0 10px;
+            text-align: left !important;
+        }
+        .container-email, .container-password {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+
     <title>Tài khoản</title>
 </head>
 <body>
@@ -32,13 +45,19 @@
     
     <div class="container-login">
         <h1 class="title_login">Đăng nhập</h1>
-        <form action="#" method="post" th:action="@{/login-author}" th:object="${account}">
+        <form action="#" method="post" th:action="@{/login}" th:object="${user}">
 
-            <label for="tb_account">Địa chỉ email</label>
-            <input type="email" id="tb_account" th:name="email" required>
+            <div class="container-email">
+                <label for="tb_account">Địa chỉ email</label>
+                <input type="email" id="tb_account" th:field="*{email}" required>
+                <p th:if="${#fields.hasErrors('email')}" th:errorclass="error-email" th:errors="*{email}"/>
+            </div>
 
-            <label for="tb_password">Mật khẩu</label>
-            <input type="password"  id="tb_password" th:name="pass" required>
+            <div class="container-password">
+                <label for="tb_password">Mật khẩu</label>
+                <input type="password"  id="tb_password" th:field="*{password}" required>
+                <p th:if="${#fields.hasErrors()}" th:errorclass="error-pass" th:errors="${user}"/>
+            </div>
 
             <input type="submit" value="Đăng nhập">
         </form>

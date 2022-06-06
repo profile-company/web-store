@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class UserServices {
 
-    @Autowired
+//    @Autowired
     private JavaMailSender mailSender;
 
     @Autowired

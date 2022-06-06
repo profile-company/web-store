@@ -1,17 +1,40 @@
 package com.example.webstore.dto;
 
+import com.example.webstore.annotations.EmailNotEnabled;
+import com.example.webstore.annotations.IncorrectPassword;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The UserDto class Data Transfer Object to send all login information to Spring
+ * backend
+ * @author Nguyen Thuan
+ * @version 1.00 31 May 2022
+ *
+ * Modification Logs:
+ *      DATE            AUTHOR          DESCRIPTION
+ * -------------------------------------------------------------------------
+ *      31-May-2022     Nguyen Thuan    Implement class
+ */
+
+@IncorrectPassword
 public class UserDto {
 
-    @NotEmpty
-    @NotNull
+    @EmailNotEnabled
     private String email;
 
-    @NotEmpty
-    @NotNull
     private String password;
+
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public String getEmail() {
         return email;
@@ -27,5 +50,10 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" + "email='" + email + '\'' + ", password='" + password + '\'' + '}';
     }
 }
