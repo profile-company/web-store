@@ -5,6 +5,7 @@ import com.example.webstore.models.OrderItemModels;
 import com.example.webstore.models.ProductModels;
 import com.example.webstore.repository.CategoryRepository;
 import com.example.webstore.repository.ProductRepository;
+import com.example.webstore.services.AccountSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,9 @@ public class Product {
 
         int idCategory = 0;
         int idProduct = 0;
+
+        AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
+        System.out.println(accountSingleton.getUserDto().getEmail());
 
         try {
             idProduct = Integer.parseInt(id);
