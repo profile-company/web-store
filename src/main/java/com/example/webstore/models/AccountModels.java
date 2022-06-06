@@ -1,32 +1,24 @@
 package com.example.webstore.models;
 
-import com.example.webstore.annotations.EmailValidation;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "account")
 public class AccountModels {
     
     @Id
-    @EmailValidation
     @Column(name="email")
     private String email;
 
-    @NotNull
     @Column(name = "password")
     private String password;
 
-    @Nullable
     @Column(name = "datetime")
     private String dateCreate;
 
-    @Nullable
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -34,16 +26,14 @@ public class AccountModels {
 
     }
 
-    public AccountModels(@NotNull String email, @NotNull String password,
-            @Nullable String dateCreate, @Nullable boolean enabled) {
+    public AccountModels(String email, String password, String dateCreate, boolean enabled) {
         this.email = email;
         this.password = password;
         this.dateCreate = dateCreate;
         this.enabled = enabled;
     }
 
-    public AccountModels(@NotNull String email, @NotNull String password,
-            @Nullable String dateCreate) {
+    public AccountModels(String email, String password, String dateCreate) {
         this.email = email;
         this.password = password;
         this.dateCreate = dateCreate;

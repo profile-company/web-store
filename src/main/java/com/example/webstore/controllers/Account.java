@@ -1,102 +1,106 @@
 package com.example.webstore.controllers;
 
-import com.example.webstore.dto.UserDto;
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
+import com.example.webstore.models.VerifyCode;
 import com.example.webstore.repository.AccountRepository;
-import com.example.webstore.services.AccountSingleton;
-import com.example.webstore.services.PasswordSecurity;
+import com.example.webstore.repository.VerifyCodeRepository;
 import com.example.webstore.services.UserServices;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.HttpConstraintElement;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import javax.swing.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-
-/**
- * The Account class provides controller for users can activities such as login, sign up.
- * @author Nguyen Thuan
- * @version 1.00 20 May 2022
- *
- * Modification Logs:
- *      DATE            AUTHOR          DESCRIPTION
- * ---------------------------------------------------------------------------------------
- *      30-May-2022     Nguyen Thuan    Encoded password before save into DB when register
- *      31-May-2022     Nguyen Thuan    Update code for use-case login consist of login and
- *                                      forget password.
- *      06-June-2022    Nguyen Thuan    Add Singleton object.
- */
 @Controller
 public class Account {
 
+    private Author author;
     private static String EMAIL = "";
+    @Autowired
+    private AccountRepository repository;
 
     @Autowired
-    private AccountRepository repoAccount;
-
-    @Autowired
-    private PasswordSecurity passwordSecurity;
+    private VerifyCodeRepository repoCode;
 
     @Autowired
     private UserServices services;
 
-    /**
-     * ...method loginAccount documentation comment...
-     * get data from request in form. Authentication user account.
-     * @param userDto save date sent from form.
-     * @param bindingResult check error when login.
-     * @param response use to send cookie.
-     * @return return a view page.
-     */
-    @PostMapping("/login")
-    public String loginAccount(@ModelAttribute("user") @Valid UserDto userDto,
-            BindingResult bindingResult,
-            HttpServletResponse response){
+    @PostMapping("/login-author")
+    public String Login(@RequestParam(value = "email") String email, @RequestParam(value = "pass") String pass, HttpServletResponse response){
 
-        // check error when button login clicked.
-        if (bindingResult.hasErrors()) {
-         return "login"; // redirect to view login.
+        // System.out.println(email + pass);
+
+        author = new Author(email, pass, repository);
+
+        if (author.isPassOfAccount() == true) {
+//            System.out.println("Đăng nhập thành công");
+            Cookie cookie = new Cookie("name", email);
+            response.addCookie(cookie);
+            return "redirect:/";
+        }
+        else {
+
+//            System.out.println("Lỗi đăng nhập");
+            return "<h1>Đăng nhập thất bại</h1>";
+        }
+    }
+
+     @PostMapping("/verify-registration")
+     public String verifyRegistration(@RequestParam(value = "confirm_pass") String confirmPass,
+                                      @RequestParam(value = "password") String  password,
+                                      @RequestParam(value = "sex") String sex,
+                                      @ModelAttribute("user") CustomerModels cus,
+                                      HttpServletRequest request){
+
+        //
+         String email = cus.getAccountEmail();
+         LocalDateTime timeCreate = LocalDateTime.now();
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+         String timeCreateFormatted = timeCreate.format(formatter);
+         int isEmailAlready = repository.existsEmail(email);
+
+        // check email already before ?
+        if (isEmailAlready > 0) {
+            return "redirect:/verify-registration";
         }
 
-        AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
-        accountSingleton.setUserDto(userDto);
+        EMAIL = cus.getAccountEmail();
+        AccountModels newAccount = new AccountModels(email, password,timeCreateFormatted, false);
 
-        Cookie cookie = new Cookie("name", accountSingleton.getUserDto()
-                .getEmail().split("@")[0]);
-        response.addCookie(cookie);
+        services.register(newAccount,cus ,getSiteUrl(request));
 
-        return "redirect:/";
-    }
+         return "redirect:/email/verify";
+     }
 
-    /**
-     * ..method getSiteUrl documentation comment...
-     * @param request get HttpServletRequest
-     * @return return url to verify account.
-     */
-    public String getSiteUrl(HttpServletRequest request) {
+     public String getSiteUrl(HttpServletRequest request) {
         String url = request.getRequestURL().toString();
         return url.replace(request.getServletPath(), "");
-    }
+     }
 
-    /**
-     * ...method verifyAccount documentation comment...
-     * @param code get code from request parameter code url.
-     * @return return result.
-     */
     @GetMapping("/verify")
     public String verifyAccount(@RequestParam("code") String code) {
-        String email = AccountSingleton.getAccountSingleton().getUserDto().getEmail();
-        if (services.verify(email, code)) {
+        if (services.verify(EMAIL, code)) {
+
+            VerifyCode verifyCode = new VerifyCode();
+            verifyCode.setCode(null);
+            verifyCode.setEmail(EMAIL);
+            repoCode.save(verifyCode);
 
             return "redirect:/success";
         }
