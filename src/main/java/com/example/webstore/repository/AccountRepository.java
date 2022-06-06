@@ -21,12 +21,21 @@ public interface AccountRepository extends JpaRepository<AccountModels, String> 
     int existsEmail(String email);
 
     @Query(value = "SELECT * FROM account u where u.email = ?1", nativeQuery = true)
-    AccountModels findAccountByEmail(String email);
+    AccountModels findEnabledByEmail(String email);
 
     // create query insert new account into account model
+
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO account(email, password, datetime, enabled) values (?1, ?2, ?3, ?4)",
-    nativeQuery = true)
+            nativeQuery = true)
     void insertNewAccount(String email, String password, String date, boolean enabled);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE account u SET u.enabled = ?1 WHERE u.email = ?2",
+            nativeQuery = true)
+    void updateEnabled(boolean flag, String email);
+
 }
