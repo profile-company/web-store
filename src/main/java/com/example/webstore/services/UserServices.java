@@ -26,11 +26,10 @@ import java.io.UnsupportedEncodingException;
  * -------------------------------------------------------------------------
  *      30-May-2022     Nguyen Thuan    Encoded password before save into DB
  */
-
 @Service
 public class UserServices {
 
-//    @Autowired
+    @Autowired
     private JavaMailSender mailSender;
 
     @Autowired

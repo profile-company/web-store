@@ -7,6 +7,7 @@ import com.example.webstore.repository.AccountRepository;
 import com.example.webstore.services.AccountSingleton;
 import com.example.webstore.services.PasswordSecurity;
 import com.example.webstore.services.UserServices;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -39,7 +40,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class Account {
 
-    private static String EMAIL = "";
+    AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
 
     @Autowired
     private AccountRepository repoAccount;
@@ -68,7 +69,7 @@ public class Account {
          return "login"; // redirect to view login.
         }
 
-        AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
+//        AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
         accountSingleton.setUserDto(userDto);
 
         Cookie cookie = new Cookie("name", accountSingleton.getUserDto()
@@ -77,6 +78,55 @@ public class Account {
 
         return "redirect:/";
     }
+
+    /**
+     * ...verifyRegistration method documentation comment...
+     * @param cus get object CustomerModels from form signup.
+     * @param account get object AccountModels from form signup.
+     * @param bindingResult check errors when signup.
+     * @param request get request current.
+     * @return return a view page
+     */
+    @PostMapping("/account/register")
+    public String verifyRegistration(@ModelAttribute("user") CustomerModels cus,
+            @ModelAttribute("account")@Valid AccountModels account,
+            BindingResult bindingResult,
+            HttpServletRequest request){
+
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
+
+        // Complete instance account of object AccountModel.
+        String email = account.getEmail();
+        String passwordDecode = passwordSecurity.
+                passwordEncoder(account.getPassword());
+        account.setPassword(passwordDecode);
+        LocalDateTime timeCreate = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss");
+        String timeCreateFormatted = timeCreate.format(formatter);
+        account.setDateCreate(timeCreateFormatted);
+        account.setEnabled(false);
+
+        // Complete instance cus of object CustomerModel.
+        cus.setAccountEmail(email);
+
+        /**
+         * initialization accountSingleton object.
+         */
+        UserDto userDto = new UserDto();
+        userDto.setEmail(email);
+        userDto.setPassword(account.getPassword());
+        userDto.setEnabled(false);
+
+        accountSingleton.setUserDto(userDto);
+
+        services.register(account, cus, getSiteUrl(request));
+
+        return "redirect:/";
+    }
+
 
     /**
      * ..method getSiteUrl documentation comment...
@@ -95,7 +145,8 @@ public class Account {
      */
     @GetMapping("/verify")
     public String verifyAccount(@RequestParam("code") String code) {
-        String email = AccountSingleton.getAccountSingleton().getUserDto().getEmail();
+
+        String email = accountSingleton.getUserDto().getEmail();
         if (services.verify(email, code)) {
 
             return "redirect:/success";
