@@ -1,10 +1,13 @@
 package com.example.webstore.controllers;
 
+import com.example.webstore.dto.ShowProduct;
 import com.example.webstore.dto.UserDto;
 import com.example.webstore.models.AccountModels;
 import com.example.webstore.models.CustomerModels;
 import com.example.webstore.models.ProductModels;
 import com.example.webstore.repository.ProductRepository;
+import com.example.webstore.services.ProductFactory;
+import com.example.webstore.services.ShowProductConcrete;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +27,33 @@ public class home {
     @Autowired
     ProductRepository productRepo;
 
+    @Autowired
+    ShowProductConcrete factory;
+
     @GetMapping("/")
     public String home(Model model){
 
-        List<ProductModels> listProducts = productRepo.getAllProducts();
+//        List<ProductModels> listProducts = productRepo.getAllProducts();
 
         //ProductModels productDto = new ProductModels();
 //        productDto.setName("Thuan");
 //        System.out.println(listProducts.get(0));
+
+        List<Integer> listId = productRepo.getAllIdProduct();
+
+        if (listId == null) {
+            throw new ArithmeticException("Not found all id product!");
+        }
+
+        List<ShowProduct> listProducts =
+                new ArrayList<ShowProduct>();
+
+        for (int item:listId) {
+
+            ShowProduct product = (ShowProduct) factory.createProduct(item);
+            listProducts.add(product);
+        }
+//        System.out.println(listProducts);
 
         model.addAttribute("products", listProducts);
 
@@ -40,8 +62,8 @@ public class home {
 
     /**
      * ...methode login documentation comment...
-     * @param model supply attributes used for rendering view be returned
-     * @return return view login
+     * @param model supply attributes used for rendering view be returned.
+     * @return return view login.
      */
     @GetMapping("/login")
     public String login(Model model) {
@@ -51,6 +73,11 @@ public class home {
         return "login";
     }
 
+    /**
+     * ...method register documentation comment...
+     * @param model supply attributes used for rendering view be returned.
+     * @return return view signup.
+     */
     @GetMapping("/account/register")
     public  String register(Model model) {
 

@@ -1,16 +1,17 @@
 package com.example.webstore.controllers;
 
-import com.example.webstore.models.CategoryModels;
+import com.example.webstore.dto.DetailProduct;
 import com.example.webstore.models.OrderItemModels;
 import com.example.webstore.models.ProductModels;
 import com.example.webstore.repository.CategoryRepository;
 import com.example.webstore.repository.ProductRepository;
-import com.example.webstore.services.AccountSingleton;
+
+import com.example.webstore.services.DetailProductConcrete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,16 +27,15 @@ public class Product {
     CategoryRepository categoryRepo;
 
     @Autowired
+    DetailProductConcrete factory;
+
+    @Autowired
     ProductRepository productRepo;
 
     @GetMapping("/detail-product")
     public String productDetail(@RequestParam("id") String id, Model model){
 
-        int idCategory = 0;
         int idProduct = 0;
-
-        AccountSingleton accountSingleton = AccountSingleton.getAccountSingleton();
-        System.out.println(accountSingleton.getUserDto().getEmail());
 
         try {
             idProduct = Integer.parseInt(id);
@@ -43,23 +43,18 @@ public class Product {
         catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
-        // get id category in table product
-        idCategory = productRepo.getIdCategoryProduct(idProduct);
 
-        // get two object product and category
-        CategoryModels category = categoryRepo.getDetailCategory(idCategory);
-        ProductModels pro = productRepo.getOneProduct(idProduct);
+        DetailProduct product = (DetailProduct) factory
+                .createProduct(idProduct);
+
 
         // transform string of size to list sizes
-        String strSizes = pro.getSize();
-        List<String> listSize = new ArrayList<String>(Arrays.asList(strSizes.split(",")));
+        String sizes = product.getSizes();
+        List<String> listSize = new ArrayList<String>(Arrays
+                .asList(sizes.split(",")));
 
         model.addAttribute("size", listSize);
-        model.addAttribute("product", pro);
-        model.addAttribute("category", category);
-
-        System.out.println(category.toString());
-        System.out.println(pro.toString());
+        model.addAttribute("product", product);
 
         return "DetailProduct";
     }
