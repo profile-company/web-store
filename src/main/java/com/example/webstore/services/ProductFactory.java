@@ -1,7 +1,5 @@
 package com.example.webstore.services;
 
-import com.example.webstore.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,10 +11,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public abstract class ProductFactory {
-
-    @Autowired
-    private ProductRepository productRepo;
-
     /**
      * Subclasses will override this method in order to
      * create specific product objects.

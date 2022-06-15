@@ -30,14 +30,14 @@ public class home {
     @Autowired
     ShowProductConcrete factory;
 
+    /**
+     * ...home method documentation comment...
+     * Handle requests home page.
+     * @param model to render data into view.
+     * @return show home page.
+     */
     @GetMapping("/")
     public String home(Model model){
-
-//        List<ProductModels> listProducts = productRepo.getAllProducts();
-
-        //ProductModels productDto = new ProductModels();
-//        productDto.setName("Thuan");
-//        System.out.println(listProducts.get(0));
 
         List<Integer> listId = productRepo.getAllIdProduct();
 
@@ -53,7 +53,6 @@ public class home {
             ShowProduct product = (ShowProduct) factory.createProduct(item);
             listProducts.add(product);
         }
-//        System.out.println(listProducts);
 
         model.addAttribute("products", listProducts);
 
@@ -89,6 +88,10 @@ public class home {
         return "signup";
     }
 
+    /**
+     * show page message for user verification email.
+     * @return verify page.
+     */
     @GetMapping("/email/verify")
     public String emailVerify() {return "verify";}
 

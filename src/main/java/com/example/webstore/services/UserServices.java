@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
@@ -64,6 +63,12 @@ public class UserServices {
         sendVerificationEmail(customer, verifyCode, url);
     }
 
+    /**
+     * Send mail to user verify account.
+     * @param customer to show information user.
+     * @param code get code to attach with email.
+     * @param url get url to verify.
+     */
     private void sendVerificationEmail(CustomerModels customer, VerifyCode code,
             String url) {
 
@@ -103,6 +108,12 @@ public class UserServices {
         mailSender.send(message);
     }
 
+    /**
+     * Check code, and action something update data.
+     * @param email get address email.
+     * @param code get code.
+     * @return return result checking.
+     */
     public boolean verify(String email, String code) {
 
         String myCode = repoCode.findVerifyCodeByEmail(email);

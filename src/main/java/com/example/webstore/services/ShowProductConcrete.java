@@ -13,10 +13,6 @@ public class ShowProductConcrete extends ProductFactory{
     @Autowired
     private ProductRepository productRepo;
 
-//    @Autowired
-//    private CategoryRepository categoryRepo;
-
-
     @Override
     public Product createProduct(int id) {
 
